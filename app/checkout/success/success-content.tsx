@@ -137,16 +137,23 @@ export function CheckoutSuccessContent() {
             transition={{ delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
           >
-            <Button asChild size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 group text-primary-foreground font-semibold shadow-lg shadow-primary/25">
+            <Button
+              asChild
+              size="lg"
+              className="text-lg px-8 py-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 group text-primary-foreground font-semibold shadow-lg shadow-primary/25"
+            >
               <Link href="/app">
                 Start Coding Now
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 border-primary/30 hover:bg-primary/10">
-              <Link href="/docs">
-                View Documentation
-              </Link>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 py-6 border-primary/30 hover:bg-primary/10"
+            >
+              <Link href="/docs">View Documentation</Link>
             </Button>
           </motion.div>
 

@@ -105,9 +105,7 @@ export function LandingPage() {
                   AmroCode
                 </span>
               </Link>
-              <p className="text-sm text-muted-foreground">
-                The ultimate AI coding platform for modern developers.
-              </p>
+              <p className="text-sm text-muted-foreground">The ultimate AI coding platform for modern developers.</p>
             </div>
 
             {/* Links */}
@@ -155,9 +153,7 @@ export function LandingPage() {
           </div>
 
           <div className="mt-12 pt-8 border-t border-border/50">
-            <p className="text-center text-sm text-muted-foreground">
-              © 2024 AmroCode. All rights reserved.
-            </p>
+            <p className="text-center text-sm text-muted-foreground">© 2024 AmroCode. All rights reserved.</p>
           </div>
         </div>
       </footer>

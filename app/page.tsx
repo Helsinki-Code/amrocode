@@ -8,7 +8,7 @@ export default async function Home() {
 
   // If user is logged in and has a subscription, redirect to app
   if (session?.user) {
-    const hasSubscription = await checkUserSubscription(session.user.userId)
+    const hasSubscription = await checkUserSubscription(session.user.id)
     if (hasSubscription) {
       redirect('/app')
     }

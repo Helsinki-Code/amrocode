@@ -10,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const subscription = await getUserSubscription(session.user.userId)
+    const subscription = await getUserSubscription(session.user.id)
 
     if (!subscription) {
       return NextResponse.json({ hasSubscription: false, subscription: null })

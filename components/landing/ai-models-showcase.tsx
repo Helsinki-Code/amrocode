@@ -91,12 +91,12 @@ export function AIModelsShowcase() {
 
                 <div className="relative space-y-3">
                   <div className="text-4xl">{model.icon}</div>
-                  <div className={`text-sm font-semibold ${selectedModel === index ? 'text-white' : 'text-foreground'}`}>
+                  <div
+                    className={`text-sm font-semibold ${selectedModel === index ? 'text-white' : 'text-foreground'}`}
+                  >
                     {model.name}
                   </div>
-                  <div
-                    className={`text-xs ${selectedModel === index ? 'text-white/80' : 'text-muted-foreground'}`}
-                  >
+                  <div className={`text-xs ${selectedModel === index ? 'text-white/80' : 'text-muted-foreground'}`}>
                     {model.provider}
                   </div>
                 </div>
@@ -121,7 +121,9 @@ export function AIModelsShowcase() {
               transition={{ duration: 0.3 }}
               className="relative"
             >
-              <div className={`absolute -inset-4 bg-gradient-to-r ${models[selectedModel].color} rounded-3xl blur-3xl opacity-20`} />
+              <div
+                className={`absolute -inset-4 bg-gradient-to-r ${models[selectedModel].color} rounded-3xl blur-3xl opacity-20`}
+              />
 
               <div className="relative bg-card/50 backdrop-blur-xl rounded-3xl p-12 border border-border">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -156,7 +158,9 @@ export function AIModelsShowcase() {
 
                   {/* Right: Visual Demo */}
                   <div className="relative">
-                    <div className={`absolute -inset-2 bg-gradient-to-r ${models[selectedModel].color} rounded-2xl blur-xl opacity-30 animate-pulse`} />
+                    <div
+                      className={`absolute -inset-2 bg-gradient-to-r ${models[selectedModel].color} rounded-2xl blur-xl opacity-30 animate-pulse`}
+                    />
                     <div className="relative bg-black/90 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
                       <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />

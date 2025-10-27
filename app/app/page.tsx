@@ -15,7 +15,7 @@ export default async function AppPage() {
   }
 
   // Check subscription status
-  const hasSubscription = await checkUserSubscription(session.user.userId)
+  const hasSubscription = await checkUserSubscription(session.user.id)
 
   if (!hasSubscription) {
     redirect('/?subscribe=required')

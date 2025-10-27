@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { userId, email } = session.user
+    const { id: userId, email } = session.user
 
     // Check if user already has an active subscription
     const existingSubscription = await db.query.subscriptions.findFirst({

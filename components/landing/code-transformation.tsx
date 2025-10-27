@@ -59,7 +59,7 @@ export function CodeTransformation() {
           }, 30)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     )
 
     if (sectionRef.current) {
@@ -75,9 +75,7 @@ export function CodeTransformation() {
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl md:text-6xl font-bold">
             Watch Your Code{' '}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Transform
-            </span>
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Transform</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             From rough ideas to production-ready code. See the magic happen in real-time.

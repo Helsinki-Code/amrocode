@@ -138,7 +138,9 @@ export function PremiumPricing() {
             onMouseLeave={() => setIsHovered(false)}
           >
             {/* Animated glow */}
-            <div className={`absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] rounded-3xl blur-2xl transition-all duration-500 ${isHovered ? 'opacity-75 animate-gradient' : 'opacity-50'}`} />
+            <div
+              className={`absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] rounded-3xl blur-2xl transition-all duration-500 ${isHovered ? 'opacity-75 animate-gradient' : 'opacity-50'}`}
+            />
 
             {/* Card */}
             <div className="relative bg-black/90 backdrop-blur-2xl rounded-3xl border border-primary/30 overflow-hidden">
@@ -157,9 +159,7 @@ export function PremiumPricing() {
                     <span className="text-6xl md:text-7xl font-bold text-white">£499</span>
                     <span className="text-2xl text-muted-foreground">/month</span>
                   </div>
-                  <p className="text-lg text-muted-foreground">
-                    Everything you need to build at superhuman speed
-                  </p>
+                  <p className="text-lg text-muted-foreground">Everything you need to build at superhuman speed</p>
                 </div>
 
                 {/* Features */}
@@ -244,7 +244,10 @@ export function PremiumPricing() {
           <p className="text-sm text-muted-foreground mb-6">Trusted by developers worldwide</p>
           <div className="flex items-center justify-center gap-2">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/20" />
+              <div
+                key={i}
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/20"
+              />
             ))}
             <span className="ml-2 text-sm text-muted-foreground">+1,000 developers</span>
           </div>
