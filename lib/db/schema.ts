@@ -429,3 +429,68 @@ export type InsertSetting = z.infer<typeof insertSettingSchema>
 export const userConnections = accounts
 export type UserConnection = Account
 export type InsertUserConnection = InsertAccount
+
+// Subscriptions table - user payment and subscription info
+export const subscriptions = pgTable(
+  'subscriptions',
+  {
+    id: text('id').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }), // Foreign key to users table
+    stripeCustomerId: text('stripe_customer_id').notNull(),
+    stripeSubscriptionId: text('stripe_subscription_id'),
+    stripePriceId: text('stripe_price_id'),
+    stripeProductId: text('stripe_product_id'),
+    status: text('status', {
+      enum: ['active', 'canceled', 'past_due', 'trialing', 'incomplete', 'incomplete_expired', 'unpaid'],
+    })
+      .notNull()
+      .default('incomplete'),
+    currentPeriodStart: timestamp('current_period_start'),
+    currentPeriodEnd: timestamp('current_period_end'),
+    cancelAtPeriodEnd: boolean('cancel_at_period_end').default(false),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => ({
+    // Unique constraint: a user can only have one subscription
+    userIdUnique: uniqueIndex('subscriptions_user_id_idx').on(table.userId),
+    stripeCustomerIdUnique: uniqueIndex('subscriptions_stripe_customer_id_idx').on(table.stripeCustomerId),
+  }),
+)
+
+export const insertSubscriptionSchema = z.object({
+  id: z.string().optional(),
+  userId: z.string().min(1, 'User ID is required'),
+  stripeCustomerId: z.string().min(1, 'Stripe customer ID is required'),
+  stripeSubscriptionId: z.string().optional(),
+  stripePriceId: z.string().optional(),
+  stripeProductId: z.string().optional(),
+  status: z
+    .enum(['active', 'canceled', 'past_due', 'trialing', 'incomplete', 'incomplete_expired', 'unpaid'])
+    .default('incomplete'),
+  currentPeriodStart: z.date().optional(),
+  currentPeriodEnd: z.date().optional(),
+  cancelAtPeriodEnd: z.boolean().default(false),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+})
+
+export const selectSubscriptionSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  stripeCustomerId: z.string(),
+  stripeSubscriptionId: z.string().nullable(),
+  stripePriceId: z.string().nullable(),
+  stripeProductId: z.string().nullable(),
+  status: z.enum(['active', 'canceled', 'past_due', 'trialing', 'incomplete', 'incomplete_expired', 'unpaid']),
+  currentPeriodStart: z.date().nullable(),
+  currentPeriodEnd: z.date().nullable(),
+  cancelAtPeriodEnd: z.boolean().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+})
+
+export type Subscription = z.infer<typeof selectSubscriptionSchema>
+export type InsertSubscription = z.infer<typeof insertSubscriptionSchema>

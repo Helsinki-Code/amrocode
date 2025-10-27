@@ -1,12 +1,12 @@
-# Coding Agent Template
+# AmroCode
 
-A template for building AI-powered coding agents that supports Claude Code, OpenAI's Codex CLI, GitHub Copilot CLI, Cursor CLI, Google Gemini CLI, and opencode with [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox) to automatically execute coding tasks on your repositories.
+An AI-powered coding platform that supports Claude Code, OpenAI's Codex CLI, GitHub Copilot CLI, Cursor CLI, Google Gemini CLI, and opencode with [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox) to automatically execute coding tasks on your repositories.
 
-![Coding Agent Template Screenshot](screenshot.png)
+![AmroCode Screenshot](screenshot.png)
 
 ## Deploy Your Own
 
-You can deploy your own version of the coding agent template to Vercel with one click:
+You can deploy your own version of AmroCode to Vercel with one click:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fcoding-agent-template&env=SANDBOX_VERCEL_TEAM_ID,SANDBOX_VERCEL_PROJECT_ID,SANDBOX_VERCEL_TOKEN,JWE_SECRET,ENCRYPTION_KEY&envDescription=Required+environment+variables+for+the+coding+agent+template.+You+must+also+configure+at+least+one+OAuth+provider+(GitHub+or+Vercel)+after+deployment.+Optional+API+keys+can+be+added+later.&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D&project-name=coding-agent-template&repository-name=coding-agent-template)
 
@@ -41,7 +41,7 @@ For detailed setup instructions, see the [Local Development Setup](#local-develo
 Or run locally:
 ```bash
 git clone https://github.com/vercel-labs/coding-agent-template.git
-cd coding-agent-template
+cd amrocode
 pnpm install
 # Set up .env.local with required variables
 pnpm db:push
@@ -174,7 +174,7 @@ Connect MCP Servers to extend Claude Code with additional tools and integrations
 
 ```bash
 git clone https://github.com/vercel-labs/coding-agent-template.git
-cd coding-agent-template
+cd amrocode
 ```
 
 ### 2. Install dependencies
