@@ -17,9 +17,13 @@ export async function POST(request: NextRequest) {
     const { id: userId, email } = session.user
 
     // Check if user already has an active subscription
-    const existingSubscription = await db.query.subscriptions.findFirst({
-      where: eq(subscriptions.userId, userId),
-    })
+    const existingSubscriptionResult = await db
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.userId, userId))
+      .limit(1)
+
+    const existingSubscription = existingSubscriptionResult[0]
 
     if (existingSubscription && existingSubscription.status === 'active') {
       return NextResponse.json({ error: 'You already have an active subscription' }, { status: 400 })

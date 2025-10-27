@@ -4,9 +4,13 @@ import { eq } from 'drizzle-orm'
 
 export async function checkUserSubscription(userId: string): Promise<boolean> {
   try {
-    const subscription = await db.query.subscriptions.findFirst({
-      where: eq(subscriptions.userId, userId),
-    })
+    const result = await db
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.userId, userId))
+      .limit(1)
+
+    const subscription = result[0]
 
     if (!subscription) {
       return false
@@ -31,11 +35,13 @@ export async function checkUserSubscription(userId: string): Promise<boolean> {
 
 export async function getUserSubscription(userId: string) {
   try {
-    const subscription = await db.query.subscriptions.findFirst({
-      where: eq(subscriptions.userId, userId),
-    })
+    const result = await db
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.userId, userId))
+      .limit(1)
 
-    return subscription
+    return result[0]
   } catch (error) {
     console.error('Error getting subscription:', error)
     return null
