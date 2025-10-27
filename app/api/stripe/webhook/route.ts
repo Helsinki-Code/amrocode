@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         const subscriptionId = session.subscription as string
         const userId = session.metadata?.userId
 
-        if (userId && customerId) {
+        if (userId && customerId && subscriptionId) {
           // Get subscription details from Stripe
           const stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId)
 
@@ -38,11 +38,15 @@ export async function POST(request: NextRequest) {
             .update(subscriptions)
             .set({
               stripeSubscriptionId: subscriptionId,
-              stripePriceId: stripeSubscription.items.data[0].price.id,
-              stripeProductId: stripeSubscription.items.data[0].price.product as string,
+              stripePriceId: stripeSubscription.items.data[0]?.price.id,
+              stripeProductId: stripeSubscription.items.data[0]?.price.product as string,
               status: 'active',
-              currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
-              currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+              currentPeriodStart: stripeSubscription.current_period_start
+                ? new Date(stripeSubscription.current_period_start * 1000)
+                : undefined,
+              currentPeriodEnd: stripeSubscription.current_period_end
+                ? new Date(stripeSubscription.current_period_end * 1000)
+                : undefined,
               updatedAt: new Date(),
             })
             .where(eq(subscriptions.stripeCustomerId, customerId))
@@ -58,8 +62,12 @@ export async function POST(request: NextRequest) {
           .update(subscriptions)
           .set({
             status: subscription.status as any,
-            currentPeriodStart: new Date(subscription.current_period_start * 1000),
-            currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+            currentPeriodStart: subscription.current_period_start
+              ? new Date(subscription.current_period_start * 1000)
+              : undefined,
+            currentPeriodEnd: subscription.current_period_end
+              ? new Date(subscription.current_period_end * 1000)
+              : undefined,
             cancelAtPeriodEnd: subscription.cancel_at_period_end,
             updatedAt: new Date(),
           })
