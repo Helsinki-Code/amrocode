@@ -31,22 +31,12 @@ export async function POST(request: NextRequest) {
         const userId = session.metadata?.userId
 
         if (userId && customerId && subscriptionId) {
-          // Get subscription details from Stripe
-          const stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId)
-
+          // Update subscription with basic info - full details will come from subscription.updated event
           await db
             .update(subscriptions)
             .set({
               stripeSubscriptionId: subscriptionId,
-              stripePriceId: stripeSubscription.items.data[0]?.price.id,
-              stripeProductId: stripeSubscription.items.data[0]?.price.product as string,
               status: 'active',
-              currentPeriodStart: stripeSubscription.current_period_start
-                ? new Date(stripeSubscription.current_period_start * 1000)
-                : undefined,
-              currentPeriodEnd: stripeSubscription.current_period_end
-                ? new Date(stripeSubscription.current_period_end * 1000)
-                : undefined,
               updatedAt: new Date(),
             })
             .where(eq(subscriptions.stripeCustomerId, customerId))
@@ -55,19 +45,24 @@ export async function POST(request: NextRequest) {
       }
 
       case 'customer.subscription.updated': {
-        const subscription = event.data.object as Stripe.Subscription
+        const subscription = event.data.object
         const customerId = subscription.customer as string
+        const priceId = subscription.items.data[0]?.price.id
+        const productId = subscription.items.data[0]?.price.product as string
+
+        // Type assertion for period timestamps
+        const periodStart = (subscription as any).current_period_start
+        const periodEnd = (subscription as any).current_period_end
 
         await db
           .update(subscriptions)
           .set({
+            stripeSubscriptionId: subscription.id,
+            stripePriceId: priceId,
+            stripeProductId: productId,
             status: subscription.status as any,
-            currentPeriodStart: subscription.current_period_start
-              ? new Date(subscription.current_period_start * 1000)
-              : undefined,
-            currentPeriodEnd: subscription.current_period_end
-              ? new Date(subscription.current_period_end * 1000)
-              : undefined,
+            currentPeriodStart: periodStart ? new Date(periodStart * 1000) : undefined,
+            currentPeriodEnd: periodEnd ? new Date(periodEnd * 1000) : undefined,
             cancelAtPeriodEnd: subscription.cancel_at_period_end,
             updatedAt: new Date(),
           })
